@@ -11,25 +11,25 @@ import { getToken } from './utils/getToken';
 import previewCoursesSaved from './data/previewCourses.json';
 
 function App() {
-  const [courses, setCourses] = useState<ICourse[]>([]);
-  useEffect(() => {
-    const fetchData = async () => {
-      const token = await getToken();
-      console.log('token in app', token);
-      // await setAuthToken(token);
-      setTimeout(async () => {
-        const data = await fetchCoursesData(token);
-        console.log('data in app', data);
+  // const [courses, setCourses] = useState<ICourse[]>([]);
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     const token = await getToken();
+  //     console.log('token in app', token);
+  //     // await setAuthToken(token);
+  //     setTimeout(async () => {
+  //       const data = await fetchCoursesData(token);
+  //       console.log('data in app', data);
 
-        if (data) {
-          setCourses(data.courses);
-        } else {
-          setCourses(previewCoursesSaved.courses);
-        }
-      }, 1000);
-    };
-    fetchData();
-  }, []);
+  //       if (data) {
+  //         setCourses(data.courses);
+  //       } else {
+  //         setCourses(previewCoursesSaved.courses);
+  //       }
+  //     }, 1000);
+  //   };
+  //   fetchData();
+  // }, []);
   return (
     <h1>hiiii</h1>
     // <Routes>
