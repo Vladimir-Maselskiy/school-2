@@ -1,9 +1,9 @@
-import './App.css';
+// import './App.css';
 
 import { useState, useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { Page } from './pages/Page/Page';
-import './App.css';
+// import './App.css';
 import { Home } from './component/Home/Home';
 import { fetchCoursesData } from './utils/fetchCoursesData';
 import { ICourse } from './interfaces/interfaces';
