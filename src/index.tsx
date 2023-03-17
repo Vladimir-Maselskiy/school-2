@@ -10,9 +10,9 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <React.StrictMode>
-    {/* <BrowserRouter basename="/school-2"> */}
-    <App />
-    {/* </BrowserRouter> */}
+    <BrowserRouter basename="/school-2">
+      <App />
+    </BrowserRouter>
   </React.StrictMode>
 );
 
