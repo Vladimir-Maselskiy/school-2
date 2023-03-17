@@ -31,10 +31,11 @@ function App() {
     fetchData();
   }, []);
   return (
-    <Routes>
-      <Route path="/" element={<Home courses={courses} />}></Route>
-      <Route path="/:current" element={<Page />}></Route>
-    </Routes>
+    <h1>hiiii</h1>
+    // <Routes>
+    //   <Route path="/" element={<Home courses={courses} />}></Route>
+    //   <Route path="/:current" element={<Page />}></Route>
+    // </Routes>
   );
 }
 
