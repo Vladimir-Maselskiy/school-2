@@ -1,12 +1,38 @@
+import { useState, useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
+import { Page } from './pages/Page/Page';
+import { Home } from './component/Home/Home';
+import { fetchCoursesData } from './utils/fetchCoursesData';
+import { ICourse } from './interfaces/interfaces';
+import { getToken } from './utils/getToken';
+import previewCoursesSaved from './data/previewCourses.json';
 
 import './App.css';
 
 function App() {
+  const [courses, setCourses] = useState<ICourse[]>([]);
+  useEffect(() => {
+    const fetchData = async () => {
+      const token = await getToken();
+      console.log('token in app', token);
+      // await setAuthToken(token);
+      setTimeout(async () => {
+        const data = await fetchCoursesData(token);
+        console.log('data in app', data);
+
+        if (data) {
+          setCourses(data.courses);
+        } else {
+          setCourses(previewCoursesSaved.courses);
+        }
+      }, 1000);
+    };
+    fetchData();
+  }, []);
   return (
     <Routes>
-      <Route path="/" element={<h1>hi1</h1>}></Route>
-      <Route path="/:current" element={<h1>hi2</h1>}></Route>
+      <Route path="/" element={<Home courses={courses} />}></Route>
+      <Route path="/:current" element={<Page />}></Route>
     </Routes>
   );
 }
