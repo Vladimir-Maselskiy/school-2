@@ -1,4 +1,4 @@
-export interface ICourse {
+export interface ICoursePrev {
   containsLockedLessons: boolean;
   description: string;
   duration: number;
@@ -18,4 +18,19 @@ export interface ICourse {
       previewImageLink: string;
     };
   };
+}
+
+export interface ILesson {
+  id: string;
+  title: string;
+  duration: number;
+  order: number;
+  link?: string;
+  status: 'locked' | 'unlocked';
+}
+
+export interface ICourseCurrent {
+  id: string;
+  title: string;
+  lessons: ILesson[];
 }

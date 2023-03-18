@@ -5,12 +5,13 @@ import { List, Typography, Divider, Collapse } from 'antd';
 import Card from 'antd/es/card';
 import Rate from 'antd/es/rate';
 import { useWindowWidth } from '../../hoooks';
-import { ICourse } from '../../interfaces/interfaces';
+import { ICoursePrev } from '../../interfaces/interfaces';
+import { NavLink } from 'react-router-dom';
 const { Paragraph } = Typography;
 const { Panel } = Collapse;
 
 type TProps = {
-  item: ICourse;
+  item: ICoursePrev;
 };
 
 export const CustomCard = ({ item }: TProps) => {
@@ -65,9 +66,11 @@ export const CustomCard = ({ item }: TProps) => {
 
       //   title={item.title}
     >
-      <Paragraph style={{ minHeight: 63 }} strong>
-        {item.title}
-      </Paragraph>
+      <NavLink to={`/${item.id}`}>
+        <Paragraph style={{ minHeight: 63 }} strong>
+          {item.title}
+        </Paragraph>
+      </NavLink>
       <Divider />
       <Paragraph>Lessons: {item.lessonsCount}</Paragraph>
       <Collapse>
