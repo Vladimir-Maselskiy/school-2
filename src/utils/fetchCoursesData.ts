@@ -5,7 +5,14 @@ export const fetchCoursesData = async (token: string) => {
 
   try {
     const res = await axios.get(
-      'http://api.wisey.app/api/v1/core/preview-courses'
+      'http://api.wisey.app/api/v1/core/preview-courses',
+      {
+        // @ts-ignore
+        mode: 'no-cors',
+        headers: {
+          'Access-Control-Allow-Origin': '*',
+        },
+      }
     );
     return res.data;
   } catch (error: any) {
