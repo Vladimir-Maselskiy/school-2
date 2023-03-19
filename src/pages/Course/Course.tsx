@@ -1,6 +1,6 @@
-import React, { useEffect, useState, useRef } from 'react';
-import { useParams } from 'react-router-dom';
-import { Breadcrumb, Layout, Menu, Typography } from 'antd';
+import { useEffect, useState, useRef } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
+import { Breadcrumb, Layout, Menu, Space, Typography } from 'antd';
 import { LockOutlined } from '@ant-design/icons';
 import ReactHlsPlayer from 'react-hls-player/dist';
 import { ICourseCurrent, ILesson } from '../../interfaces/interfaces';
@@ -8,17 +8,15 @@ import { getMenuItemCourse, MenuItem } from '../../utils/getMenuItemCourse';
 import { fetchCurrentCourse } from '../../utils/fetchCurrentCourse';
 
 const { Content, Footer, Sider } = Layout;
-const { Paragraph } = Typography;
 
 export const Course = () => {
   const { currentCourse } = useParams();
+  const navigate = useNavigate();
+
   const [course, setCourse] = useState<ICourseCurrent>();
   const [lesson, setLesson] = useState<ILesson>();
   const [currentVideo, setCurrentVideo] = useState('');
-  const [isAPressed, setIsAPressed] = useState(false);
-  const [isSPressed, setIsSPressed] = useState(false);
-  const [isXPressed, setIsXPressed] = useState(false);
-  const [isCPressed, setIsCPressed] = useState(false);
+
   const playerRef = useRef(null);
   let items: MenuItem[] = [];
 
@@ -31,46 +29,6 @@ export const Course = () => {
       return getMenuItemCourse(lesson.title, index, icon);
     });
   }
-
-  const ReactHlsPlayerMemo = React.memo(ReactHlsPlayer);
-
-  const handleKeyDown = (e: KeyboardEvent) => {
-    if (playerRef.current) {
-      switch (e.keyCode) {
-        case 65: // A
-          setIsAPressed(true);
-          break;
-        case 83: // S
-          setIsSPressed(true);
-          break;
-        case 88: // X
-          setIsXPressed(true);
-          break;
-        case 67: // C
-          setIsCPressed(true);
-          break;
-      }
-    }
-  };
-
-  const handleKeyUp = (e: KeyboardEvent) => {
-    switch (e.keyCode) {
-      case 65: // A
-        setIsAPressed(false);
-        break;
-      case 83: // S
-        setIsSPressed(false);
-        break;
-      default:
-        break;
-      case 88: // X
-        setIsXPressed(false);
-        break;
-      case 67: // C
-        setIsCPressed(false);
-        break;
-    }
-  };
 
   useEffect(() => {
     if (playerRef.current) {
@@ -92,16 +50,6 @@ export const Course = () => {
   }, [playerRef]);
 
   useEffect(() => {
-    document.addEventListener('keydown', handleKeyDown);
-    document.addEventListener('keyup', handleKeyUp);
-
-    return () => {
-      document.removeEventListener('keydown', handleKeyDown);
-      document.removeEventListener('keyup', handleKeyUp);
-    };
-  }, []);
-
-  useEffect(() => {
     if (currentCourse)
       fetchCurrentCourse(currentCourse).then(res => {
         setCourse(res.data.resp);
@@ -120,9 +68,9 @@ export const Course = () => {
     setLesson(course?.lessons[+e.key]);
   };
 
-  setTimeout(() => {
-    console.log(playerRef);
-  }, 5000);
+  const onBackCkick = () => {
+    navigate(-1);
+  };
 
   return (
     <Layout style={{ height: '100vh' }}>
@@ -136,9 +84,11 @@ export const Course = () => {
             textAlign: 'center',
             lineHeight: 2.0,
             overflow: 'hidden',
+            cursor: 'pointer',
           }}
+          onClick={onBackCkick}
         >
-          {course?.title}
+          {'<Back'}
         </div>
 
         <Menu
@@ -151,25 +101,34 @@ export const Course = () => {
       </Sider>
       <Layout className="site-layout">
         <Content style={{ margin: '0 16px' }}>
-          <Breadcrumb style={{ margin: '16px 0 16px 24px' }}>
-            <Breadcrumb.Item>{course?.title}</Breadcrumb.Item>
-            <Breadcrumb.Item>{lesson?.title}</Breadcrumb.Item>
-          </Breadcrumb>
+          <Breadcrumb
+            items={[
+              {
+                title: course?.title,
+              },
+              {
+                title: lesson?.title,
+              },
+            ]}
+            style={{ margin: '16px 0 16px 24px' }}
+          ></Breadcrumb>
           <div
             style={{
               padding: 24,
               minHeight: 360,
             }}
           >
-            <ReactHlsPlayerMemo
-              playerRef={playerRef}
-              src={currentVideo}
-              // autoPlay={true}
-              controls={true}
-              width="100%"
-              height="auto"
-              hlsConfig={{}}
-            />
+            <Space size="large" align="center">
+              <ReactHlsPlayer
+                playerRef={playerRef}
+                src={currentVideo}
+                controls={true}
+                width="50%"
+                height="auto"
+                hlsConfig={{}}
+                style={{ marginLeft: '100px' }}
+              />
+            </Space>
           </div>
         </Content>
         <Footer style={{ textAlign: 'center' }}>

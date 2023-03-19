@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { Course } from './pages/Course/Course';
 import { Home } from './component/Home/Home';

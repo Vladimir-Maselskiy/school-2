@@ -1,6 +1,6 @@
 import { List } from 'antd';
 
-import { useWindowWidth } from '../../hoooks';
+import { useWindowWidth } from '../../hooks';
 import { ICoursePrev } from '../../interfaces/interfaces';
 import { StyledHome } from './Home.styled';
 import { CustomCard } from '../Card/Card';

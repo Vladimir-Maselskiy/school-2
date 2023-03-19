@@ -4,7 +4,7 @@ import { List, Typography, Divider, Collapse } from 'antd';
 
 import Card from 'antd/es/card';
 import Rate from 'antd/es/rate';
-import { useWindowWidth } from '../../hoooks';
+import { useWindowWidth } from '../../hooks';
 import { ICoursePrev } from '../../interfaces/interfaces';
 import { NavLink } from 'react-router-dom';
 const { Paragraph } = Typography;
